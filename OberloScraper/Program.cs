@@ -7,6 +7,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using Newtonsoft.Json;
+using CsvHelper;
+using System.IO;
 
 namespace OberloScraper
 {
@@ -19,10 +21,22 @@ namespace OberloScraper
             var to = new DateTime(currentYear, 12, 31);
 
             var oberloOrders = ScrapeOberloOrders(from, to);
+
+            var fileName = string.Format("Oberlo Orders {0:yyyy-MM-dd}-{1:yyyy-MM-dd}.csv", from, to);
+            using (var sw = new StreamWriter(fileName))
+            {
+                var csv = new CsvWriter(sw);
+                csv.WriteRecords(oberloOrders);
+            }
+
+            Console.Out.WriteLine("Successfully wrote file to {0}", fileName);
+
+            /*
             foreach (var oberloOrder in oberloOrders)
             {
                 Console.WriteLine("{0}", oberloOrder);
             }
+            */
 
             Console.ReadLine();
         }
