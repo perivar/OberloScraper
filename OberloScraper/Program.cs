@@ -93,7 +93,7 @@ namespace OberloScraper
                 var processedAt = order.processed_at;
                 var totalPrice = order.total_price;
                 var financialStatus = order.financial_status;
-                var fulfillmentStatus = order.fullfullment_status;
+                var fulfillmentStatus = order.fulfillment_status;
                 var shippingName = order.shipping_name;
                 var shippingZip = order.shipping_zip;
                 var shippingCity = order.shipping_city;
@@ -111,6 +111,7 @@ namespace OberloScraper
                     var variant = orderitem.variant_title;
                     var cost = orderitem.cost;
                     var quantity = orderitem.quantity;
+                    var price = orderitem.price;
 
                     string trackingNumber = "";
                     foreach (var fulfillment in orderitem.fulfillments)
@@ -118,7 +119,8 @@ namespace OberloScraper
                         if (trackingNumber.Equals(""))
                         {
                             trackingNumber = fulfillment.tracking_number;
-                        } else
+                        }
+                        else
                         {
                             trackingNumber += ", " + fulfillment.tracking_number;
                         }
@@ -134,6 +136,7 @@ namespace OberloScraper
                     oberloOrder.ProductName = productName;
                     oberloOrder.Variant = variant;
                     oberloOrder.Quantity = quantity;
+                    oberloOrder.ProductPrice = price;
                     oberloOrder.TrackingNumber = trackingNumber;
                     oberloOrder.AliOrderNumber = aliOrderNumber;
                     oberloOrder.CustomerName = shippingName;
@@ -143,6 +146,7 @@ namespace OberloScraper
                     oberloOrder.CustomerZip = shippingZip;
                     oberloOrder.OrderNote = orderNote;
                     //oberloOrder.OrderState = orderState;
+                    oberloOrder.TotalPrice = totalPrice;
                     oberloOrder.Cost = cost;
 
                     oberloOrders.Add(oberloOrder);
@@ -150,7 +154,7 @@ namespace OberloScraper
             }
 
             // and process the rest of the pages
-            for (int i = current_page+1; i <= last_page; i++)
+            for (int i = current_page + 1; i <= last_page; i++)
             {
                 ScrapeOberloOrders(driver, oberloOrders, from, to, i);
             }

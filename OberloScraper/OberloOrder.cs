@@ -7,13 +7,14 @@ namespace OberloScraper
     {
         public string OrderNumber { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string FinancialStatus { get; set; }
-        public string FulfillmentStatus { get; set; }
+        public string FinancialStatus { get; set; } // 6 = Refunded, 5 = Partially Refunded, 4 = Paid, 
+        public string FulfillmentStatus { get; set; } // 1 = Shipped, 2 = In Processing
         public string Supplier { get; set; }
         public string SKU { get; set; }
         public string ProductName { get; set; }
         public string Variant { get; set; }
         public int Quantity { get; set; }
+        public decimal ProductPrice { get; set; }
         public string TrackingNumber { get; set; }
         public string AliOrderNumber { get; set; }
         public string CustomerName { get; set; }
@@ -23,6 +24,7 @@ namespace OberloScraper
         public string CustomerZip { get; set; }
         public string OrderNote { get; set; }
         public string OrderState { get; set; }
+        public decimal TotalPrice { get; set; }
         public decimal Cost { get; set; }
 
         public override string ToString()
