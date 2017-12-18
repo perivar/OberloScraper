@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -27,7 +25,6 @@ namespace OberloScraper
             // if the cache file object has values
             if (!lastCacheFile.Equals(default(KeyValuePair<DateTime, string>)))
             {
-
                 var currentDate = DateTime.Now.Date;
                 from = lastCacheFile.Key.Date;
                 to = currentDate;
