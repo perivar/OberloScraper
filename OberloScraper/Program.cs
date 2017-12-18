@@ -16,13 +16,14 @@ namespace OberloScraper
     {
         static void Main(string[] args)
         {
-            var currentYear = DateTime.Now.Year;
+            var currentDate = DateTime.Now;
+            var currentYear = currentDate.Year;
             var from = new DateTime(currentYear, 1, 1);
             var to = new DateTime(currentYear, 12, 31);
 
             var oberloOrders = ScrapeOberloOrders(from, to);
 
-            var fileName = string.Format("Oberlo Orders {0:yyyy-MM-dd}-{1:yyyy-MM-dd}.csv", from, to);
+            var fileName = string.Format("Oberlo Orders {0:yyyy-MM-dd}-{1:yyyy-MM-dd}.csv", from, currentDate);
             using (var sw = new StreamWriter(fileName))
             {
                 var csv = new CsvWriter(sw);
@@ -30,15 +31,6 @@ namespace OberloScraper
             }
 
             Console.Out.WriteLine("Successfully wrote file to {0}", fileName);
-
-            /*
-            foreach (var oberloOrder in oberloOrders)
-            {
-                Console.WriteLine("{0}", oberloOrder);
-            }
-            */
-
-            Console.ReadLine();
         }
 
         static List<OberloOrder> ScrapeOberloOrders(DateTime from, DateTime to)
@@ -58,6 +50,8 @@ namespace OberloScraper
 
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
             var ready = wait.Until(d => ((IJavaScriptExecutor)d).ExecuteScript("return document.readyState").Equals("complete"));
+
+            // fix logon also, now this needs to be done manually
 
             IJavaScriptExecutor js = driver as IJavaScriptExecutor;
             var json = js.ExecuteScript("return window.App.payload.orders;");
